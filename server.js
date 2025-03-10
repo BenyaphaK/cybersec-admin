@@ -92,6 +92,18 @@ app.put('/user', async (req, res) => {
     })}
 });
 
+app.get('/user/search',async() => {
+    console.log(req, params);
+    const input = req.params.q;
+    //const _q = 'SELECT * FROM username, cardId FROM User where username =${id}';
+    const data = await prisma.$queryRaw `SELECT * FROM username, cardId FROM User where username =${input}`;
+    console.log('data', data);
+    res.json({
+        message: 'okay',
+        data
+    })
+});
+
 app.delete('/user', async (req, res) => {
     const response = await prisma.user.delete({
         where: {
